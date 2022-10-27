@@ -26,10 +26,10 @@ public class GaleShapleyAlgorithmTests
         woman2.SetPreferenceList(new Entity[] { man1, man2, man3 });
         woman3.SetPreferenceList(new Entity[] { man1, man2, man3 });
 
-        var couples = sut.Match(new Entity[] { man1, man2, man3 }, new Entity[] { woman1, woman2, woman3 });
+        var couples = sut.Match(new Entity[] { man1, man2, man3 });
 
-        Assert.Equal(man1, couples[woman1.Id]);
-        Assert.Equal(man2, couples[woman2.Id]);
-        Assert.Equal(man3, couples[woman3.Id]);
+        Assert.Equal(man1, couples.GetPartner(woman1));
+        Assert.Equal(man2, couples.GetPartner(woman2));
+        Assert.Equal(man3, couples.GetPartner(woman3));
     }
 }

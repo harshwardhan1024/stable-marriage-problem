@@ -2,40 +2,35 @@
 
 public class GaleShapleyAlgorithm
 {
-    public Dictionary<Guid, Entity> Match(IEnumerable<Entity> males, IEnumerable<Entity> females)
+    public Couples Match(IEnumerable<Entity> males)
     {
-        var couples = new Dictionary<Guid, Entity>(males.Count() * 2);
+        var couples = new Couples();
         while (true)
         {
             foreach (var male in males)
             {
-                if (couples.ContainsKey(male.Id))
+                if (couples.IsEngaged(male))
                 {
                     continue;
                 }
 
                 var preferredFemale = male.NextPreferred();
 
-                if (couples.ContainsKey(preferredFemale.Id))
+                if (couples.IsEngaged(preferredFemale))
                 {
-                    var femaleEngagedTo = couples[preferredFemale.Id];
-                    if (preferredFemale.MorePreferred(male, femaleEngagedTo) == male)
+                    if (preferredFemale.MorePreferred(male, couples.GetPartner(preferredFemale)) == male)
                     {
-                        couples.Remove(preferredFemale.Id);
-                        couples.Remove(femaleEngagedTo.Id);
-
-                        couples.Add(preferredFemale.Id, male);
-                        couples.Add(male.Id, preferredFemale);
+                        couples.BreakEngagement(preferredFemale);
+                        couples.Engage(male, preferredFemale);
                     }
                 }
                 else
                 {
-                    couples.Add(male.Id, preferredFemale);
-                    couples.Add(preferredFemale.Id, male);
+                    couples.Engage(male, preferredFemale);
                 }
             }
 
-            if (males.All(m => couples.ContainsKey(m.Id)))
+            if (males.All(m => couples.IsEngaged(m)))
             {
                 break;
             }

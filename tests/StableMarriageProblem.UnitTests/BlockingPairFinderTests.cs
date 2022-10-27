@@ -16,13 +16,9 @@ public class BlockingPairFinderTests
         male2.SetPreferenceList(new Entity[] { female1, female2 });
         female2.SetPreferenceList(new Entity[] { male2, male1 });
 
-        var couples = new Dictionary<Guid, Entity>()
-        {
-            { male1.Id, female1 },
-            { female1.Id, male1 },
-            { male2.Id, female2 },
-            { female2.Id, male2 }
-        };
+        var couples = new Couples();
+        couples.Engage(male1, female1);
+        couples.Engage(male2, female2);
 
         var sut = new BlockingPairFinder();
 
@@ -43,13 +39,9 @@ public class BlockingPairFinderTests
         male2.SetPreferenceList(new Entity[] { female1, female2 });
         female2.SetPreferenceList(new Entity[] { male2, male1 });
 
-        var couples = new Dictionary<Guid, Entity>()
-        {
-            { male1.Id, female2 },
-            { female2.Id, male1 },
-            { male2.Id, female1 },
-            { female1.Id, male2 }
-        };
+        var couples = new Couples();
+        couples.Engage(male1, female2);
+        couples.Engage(male2, female1);
 
         var sut = new BlockingPairFinder();
 
