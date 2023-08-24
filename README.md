@@ -1,1 +1,2 @@
-This repository contains source code for my post on **Stable Marriage Problem** which you can check it out [here](https://harshmatharu.com/blog/stable-marriage-problem).
+## Introduction
+This is an implementation of [Stable Marriage Problem](https://harshmatharu.com/blog/stable-marriage-problem) in C#.
